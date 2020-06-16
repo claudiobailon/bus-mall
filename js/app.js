@@ -74,13 +74,31 @@ function chooseRandomImages(){
   var secondRandomImage = pickRandom(0, Product.collection.length);
   var thirdRandomImage = pickRandom(0, Product.collection.length);
 
-  while(secondRandomImage === firstRandomImage){
+  while (Product.collection[firstRandomImage] === firstRandomImage ||
+      Product.collection[firstRandomImage] === secondRandomImage ||
+      Product.collection[firstRandomImage] === thirdRandomImage ||
+      Product.collection[secondRandomImage] === firstRandomImage ||
+      Product.collection[secondRandomImage] === secondRandomImage ||
+      Product.collection[secondRandomImage] === thirdRandomImage ||
+      Product.collection[thirdRandomImage] === firstRandomImage ||
+      Product.collection[thirdRandomImage] === secondRandomImage ||
+      Product.collection[thirdRandomImage] === thirdRandomImage ){
+
+    firstRandomImage = pickRandom(0, Product.collection.length);
+    secondRandomImage = pickRandom(0, Product.collection.length);
+    thirdRandomImage = pickRandom(0, Product.collection.length);
+
+  }
+
+  while(secondRandomImage === firstRandomImage ||
+        secondRandomImage === ){
     secondRandomImage = pickRandom(0, Product.collection.length);
   }
   while(thirdRandomImage === firstRandomImage || thirdRandomImage === secondRandomImage){
-    thirdRandomImage = pickRandom(0, Product.collection.length); 
+    thirdRandomImage = pickRandom(0, Product.collection.length);
   }
-  randomImageArray.push(firstRandomImage,secondRandomImage,thirdRandomImage);
+  randomImageArray.push(firstRandomImage,secondRandomImage,thirdRandomImage);//populates randomImageArray
+  console.log('these shouldn\'t repeat', firstRandomImage, secondRandomImage,thirdRandomImage);
 }
 //===============================ReRender Images after the click=====================
 function reRenderRandomImages(){
