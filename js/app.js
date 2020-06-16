@@ -1,9 +1,10 @@
 'use strict';
 
 //=============================Global Variables & Functions===================================
-var productCollection = [];
+// var productCollection = [];
+Product.collection = [];
 var totalClicks = 0;
-var maxClicks = 25 ;
+var maxClicks = 5 ;
 
 function pickRandom(min, max){
   return Math.floor(Math.random() * (max - min) + min);
@@ -15,7 +16,7 @@ function Product(imageSource, caption){
   this.clicked = 0;
   this.shown = 0;
 
-  productCollection.push(this);
+  Product.collection.push(this);
 }
 
 //==============================Contructed Products===============================
@@ -53,9 +54,9 @@ function handleClickOnProduct(event){
     // console.log(totalClicks);
     //From demo,  uses src to find correct product that has been clicked, then adds one to that product's clicked count
     var targetSrc = event.target.getAttribute('src');
-    for (var i = 0; i < productCollection.length; i++){
-      if (productCollection[i].imageSrc === targetSrc){
-        productCollection[i].clicked++;
+    for (var i = 0; i < Product.collection.length; i++){
+      if (Product.collection[i].imageSrc === targetSrc){
+        Product.collection[i].clicked++;
       }
     }
     //When totatClicks === maxClicks, this removes event listener
@@ -68,15 +69,15 @@ function handleClickOnProduct(event){
 
 //===============================ReRender Images after the click=====================
 function reRenderRandomImages(){
-  var firstRandomImage = pickRandom(0, productCollection.length);
-  var secondRandomImage = pickRandom(0, productCollection.length);
-  var thirdRandomImage = pickRandom(0, productCollection.length);
+  var firstRandomImage = pickRandom(0, Product.collection.length);
+  var secondRandomImage = pickRandom(0, Product.collection.length);
+  var thirdRandomImage = pickRandom(0, Product.collection.length);
 
   while(secondRandomImage === firstRandomImage){
-    secondRandomImage = pickRandom(0, productCollection.length);
+    secondRandomImage = pickRandom(0, Product.collection.length);
   }
   while(thirdRandomImage === firstRandomImage || thirdRandomImage === secondRandomImage){//Makes certain no images are repeated on this render
-    thirdRandomImage = pickRandom(0, productCollection.length);
+    thirdRandomImage = pickRandom(0, Product.collection.length);
 
     //ToDO: Make it so pictures are different each time
   }
@@ -88,17 +89,17 @@ function reRenderRandomImages(){
   var rightImage = document.getElementById('right-image');
   var rightText = document.getElementById('right-caption');
 
-  var firstProduct = productCollection[firstRandomImage];
+  var firstProduct = Product.collection[firstRandomImage];
   leftImage.src= firstProduct.imageSrc;
   leftText.textContent = firstProduct.imageCaption;
   firstProduct.shown++;
 
-  var secondProduct = productCollection[secondRandomImage];
+  var secondProduct = Product.collection[secondRandomImage];
   centerImage.src= secondProduct.imageSrc;
   centerText.textContent = secondProduct.imageCaption;
   secondProduct.shown++;
 
-  var thirdProduct = productCollection[thirdRandomImage];
+  var thirdProduct = Product.collection[thirdRandomImage];
   rightImage.src= thirdProduct.imageSrc;
   rightText.textContent = thirdProduct.imageCaption;
   thirdProduct.shown++;
@@ -118,16 +119,16 @@ function reRenderRandomImages(){
     listHeader.textContent = 'Survey Results';
     resultsList.appendChild(listHeader);
 
-    for(var i = 0; i < productCollection.length; i++){
+    for(var i = 0; i < Product.collection.length; i++){
 
       listContent = document.createElement('li');
-      listContent.textContent = 'The image "' + productCollection[i].imageCaption + '" recieved ' + productCollection[i].clicked + ' votes out of ' + productCollection[i].shown + ' times shown.';
+      listContent.textContent = 'The image "' + Product.collection[i].imageCaption + '" recieved ' + Product.collection[i].clicked + ' votes out of ' + Product.collection[i].shown + ' times shown.';
       // console.log(listContent);
       resultsList.appendChild(listContent);
 
       //this if statement is just to make it read better if a product recieved one vote. Vote vs votes.
-      if(productCollection[i].clicked === 1){
-        listContent.textContent = 'The image "' + productCollection[i].imageCaption + '" recieved ' + productCollection[i].clicked + ' vote out of ' + productCollection[i].shown + ' times shown.';
+      if(Product.collection[i].clicked === 1){
+        listContent.textContent = 'The image "' + Product.collection[i].imageCaption + '" recieved ' + Product.collection[i].clicked + ' vote out of ' + Product.collection[i].shown + ' times shown.';
         resultsList.appendChild(listContent);
       }
     }
