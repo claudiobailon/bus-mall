@@ -50,7 +50,7 @@ catalogImageSection.addEventListener('click', handleClickOnProduct);
 function handleClickOnProduct(event){
   if(event.target.tagName === 'IMG'){
     totalClicks++;
-    console.log(totalClicks);
+    // console.log(totalClicks);
     //From demo,  uses src to find correct product that has been clicked, then adds one to that product's clicked count
     var targetSrc = event.target.getAttribute('src');
     for (var i = 0; i < productCollection.length; i++){
@@ -122,7 +122,7 @@ function reRenderRandomImages(){
 
       listContent = document.createElement('li');
       listContent.textContent = 'The image "' + productCollection[i].imageCaption + '" recieved ' + productCollection[i].clicked + ' votes out of ' + productCollection[i].shown + ' times shown.';
-      console.log(listContent);
+      // console.log(listContent);
       resultsList.appendChild(listContent);
 
       //this if statement is just to make it read better if a product recieved one vote. Vote vs votes.
@@ -133,5 +133,6 @@ function reRenderRandomImages(){
     }
   }
 }
+//try using shown atrribute to make sure same image isn't used twice in a row
 
 
