@@ -17,7 +17,7 @@ h2 {
 }
 div {
   width: 28%;
-  margin-right: 30px;
+  margin-right: 40px;
 }
 img {
   width: 100%;
@@ -39,6 +39,7 @@ div > p {
   font-size: 20px;
   color: aliceblue;
   text-align: center;
+  margin-top: 10px;
 }
 h3 {
   font-size: 30px;
