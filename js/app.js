@@ -9,8 +9,8 @@ function pickRandom(min, max){
   return Math.floor(Math.random() * (max - min) + min);
 }
 //=============================Contructor=========================================
-function Product(imageSrc, caption){
-  this.imageSrc = imageSrc;
+function Product(imageSource, caption){
+  this.imageSrc = imageSource;
   this.imageCaption = caption;
   this.clicked = 0;
   this.shown = 0;
@@ -44,13 +44,13 @@ new Product('img/bubblegum.jpg', 'Bubblegum Flavored Meatballs');
 //==============================Create Event Listener=============================
 
 var catalogImageSection = document.getElementById('catalog-images');
-catalogImageSection.addEventListener('click','handleClickOnProduct');
+catalogImageSection.addEventListener('click', handleClickOnProduct);
 
 //===============================Callback Funtion==================================
 function handleClickOnProduct(event){
-  if(event.target.tagname === 'IMG'){
+  if(event.target.tagName === 'IMG'){
     totalClicks++;
-
+    console.log(totalClicks);
     //From demo,  uses src to find correct product that has been clicked, then adds one to that product's clicked count
     var targetSrc = event.target.getAttribute('src');
     for (var i = 0; i < productCollection.length; i++){
@@ -60,12 +60,46 @@ function handleClickOnProduct(event){
     }
     //When totatClicks === maxClicks, this removes event listener
     if(totalClicks === maxClicks){
-      catalogImageSection.removeEventListener('click','handleClickOnProduct');//stops event listener
+      catalogImageSection.removeEventListener('click',handleClickOnProduct);//stops event listener
     }
     reRenderRandomImages();
   }
 }
 
 //===============================ReRender Images after the click=====================
-function
+function reRenderRandomImages(){
+  var firstRandomImage = pickRandom(0, productCollection.length);
+  var secondRandomImage = pickRandom(0, productCollection.length);
+  var thirdRandomImage = pickRandom(0, productCollection.length);
+
+  while(secondRandomImage === firstRandomImage){
+    secondRandomImage = pickRandom(0, productCollection.length);
+  }
+  while(thirdRandomImage === firstRandomImage || thirdRandomImage === secondRandomImage){//Makes certain no images are repeated on this render
+    thirdRandomImage = pickRandom(0, productCollection.length);
+  }
+
+  var leftImage = document.getElementById('left-image');
+  var leftText = document.getElementById('left-caption');
+  var centerImage = document.getElementById('center-image');
+  var centerText = document.getElementById('center-caption');
+  var rightImage = document.getElementById('right-image');
+  var rightText = document.getElementById('right-caption');
+
+  var firstProduct = productCollection[firstRandomImage];
+  leftImage.src= firstProduct.imageSrc;
+  leftText.textContent = firstProduct.imageCaption;
+  firstProduct.shown++;
+
+  var secondProduct = productCollection[secondRandomImage];
+  centerImage.src= secondProduct.imageSrc;
+  centerText.textContent = secondProduct.imageCaption;
+  secondProduct.shown++;
+
+  var thirdProduct = productCollection[thirdRandomImage];
+  rightImage.src= thirdProduct.imageSrc;
+  rightText.textContent = thirdProduct.imageCaption;
+  thirdProduct.shown++;
+}
+
 
