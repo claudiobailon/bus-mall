@@ -111,7 +111,7 @@ function reRenderRandomImages(){
     document.getElementById('right').style.display='none';
     document.getElementById('intro').style.display='none';
 
-    var resultsList = document.getElementById('catalog-images');
+    var resultsList = document.getElementById('list-location');
     var listHeader = document.createElement('h3');
     var listContent = document.createElement('li');
 
