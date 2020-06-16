@@ -66,9 +66,10 @@ function handleClickOnProduct(event){
     reRenderRandomImages();
   }
 }
+//=========================Choose Random Images function==============================
+var randomImageArray = [];
+function chooseRandomImages(){
 
-//===============================ReRender Images after the click=====================
-function reRenderRandomImages(){
   var firstRandomImage = pickRandom(0, Product.collection.length);
   var secondRandomImage = pickRandom(0, Product.collection.length);
   var thirdRandomImage = pickRandom(0, Product.collection.length);
@@ -76,11 +77,15 @@ function reRenderRandomImages(){
   while(secondRandomImage === firstRandomImage){
     secondRandomImage = pickRandom(0, Product.collection.length);
   }
-  while(thirdRandomImage === firstRandomImage || thirdRandomImage === secondRandomImage){//Makes certain no images are repeated on this render
-    thirdRandomImage = pickRandom(0, Product.collection.length);
-
-    //ToDO: Make it so pictures are different each time
+  while(thirdRandomImage === firstRandomImage || thirdRandomImage === secondRandomImage){
+    thirdRandomImage = pickRandom(0, Product.collection.length); 
   }
+  randomImageArray.push(firstRandomImage,secondRandomImage,thirdRandomImage);
+}
+//===============================ReRender Images after the click=====================
+function reRenderRandomImages(){
+  randomImageArray = [];
+  chooseRandomImages();
 
   var leftImage = document.getElementById('left-image');
   var leftText = document.getElementById('left-caption');
@@ -89,17 +94,20 @@ function reRenderRandomImages(){
   var rightImage = document.getElementById('right-image');
   var rightText = document.getElementById('right-caption');
 
-  var firstProduct = Product.collection[firstRandomImage];
+  var randomNumber1 = randomImageArray[0];
+  var firstProduct = Product.collection[randomNumber1];
   leftImage.src= firstProduct.imageSrc;
   leftText.textContent = firstProduct.imageCaption;
   firstProduct.shown++;
 
-  var secondProduct = Product.collection[secondRandomImage];
+  var randomNumber2 = randomImageArray[1];
+  var secondProduct = Product.collection[randomNumber2];
   centerImage.src= secondProduct.imageSrc;
   centerText.textContent = secondProduct.imageCaption;
   secondProduct.shown++;
 
-  var thirdProduct = Product.collection[thirdRandomImage];
+  var randomNumber3 = randomImageArray[2];
+  var thirdProduct = Product.collection[randomNumber3];
   rightImage.src= thirdProduct.imageSrc;
   rightText.textContent = thirdProduct.imageCaption;
   thirdProduct.shown++;
