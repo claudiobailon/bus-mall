@@ -42,12 +42,23 @@ new Product('img/usb.gif', 'Tentacle Flash Drive');
 new Product('img/water-can.jpg', 'Unique Watering-Can');
 new Product('img/wine-glass.jpg', 'Special Wine Glass');
 
-
-
 //======================These are to make sure proper amount of times shown for starting 3 images is correct=====
 Product.collection[0].shown= 1;
 Product.collection[1].shown= 1;
 Product.collection[2].shown= 1;
+
+
+//==========================================Retrieve saved data from Local Storage===================
+
+//below gets products from local storage in string form and assigning it to a new variable
+var savedProductsString = localStorage.getItem('savedProducts');
+var fetchedProducts = JSON.parse(savedProductsString);//turns stringed variable into object
+
+if(fetchedProducts){
+  Product.collection = fetchedProducts;
+}
+
+
 //==============================Create Event Listener=============================
 
 var catalogImageSection = document.getElementById('catalog-images');
@@ -74,7 +85,7 @@ function handleClickOnProduct(event){
   }
   //below puts all products in Product.collection into string form
   var productCollectionString = JSON.stringify(Product.collection);
-  localStorage.setItem('savedProducts', productCollectionString);
+  localStorage.setItem('savedProducts', productCollectionString);//saves string version of Product.collection
 
 }
 //=========================Choose Random Images function==============================
