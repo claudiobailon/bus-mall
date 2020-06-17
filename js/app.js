@@ -68,30 +68,36 @@ function handleClickOnProduct(event){
 }
 //=========================Choose Random Images function==============================
 var randomImageArray = [];
+var firstRandomImage = pickRandom(0, Product.collection.length);
+var secondRandomImage = pickRandom(0, Product.collection.length);
+var thirdRandomImage = pickRandom(0, Product.collection.length);
+
 function chooseRandomImages(){
 
-  var firstRandomImage = pickRandom(0, Product.collection.length);
-  var secondRandomImage = pickRandom(0, Product.collection.length);
-  var thirdRandomImage = pickRandom(0, Product.collection.length);
+  firstRandomImage = pickRandom(0, Product.collection.length);
+  secondRandomImage = pickRandom(0, Product.collection.length);
+  thirdRandomImage = pickRandom(0, Product.collection.length);
 
-  while (Product.collection[firstRandomImage] === firstRandomImage ||
-      Product.collection[firstRandomImage] === secondRandomImage ||
-      Product.collection[firstRandomImage] === thirdRandomImage ||
-      Product.collection[secondRandomImage] === firstRandomImage ||
-      Product.collection[secondRandomImage] === secondRandomImage ||
-      Product.collection[secondRandomImage] === thirdRandomImage ||
-      Product.collection[thirdRandomImage] === firstRandomImage ||
-      Product.collection[thirdRandomImage] === secondRandomImage ||
-      Product.collection[thirdRandomImage] === thirdRandomImage ){
+  //this is statment checks if any of the images are repeating
+
+  //try to come back and turn this into a for loop
+  while ( firstRandomImage === randomImageArray[0] ||
+    secondRandomImage === randomImageArray[0] ||
+    thirdRandomImage === randomImageArray[0] ||
+    firstRandomImage === randomImageArray[1] ||
+    secondRandomImage === randomImageArray[1] ||
+    thirdRandomImage === randomImageArray[1] ||
+    firstRandomImage === randomImageArray[2] ||
+    secondRandomImage === randomImageArray[2] ||
+    thirdRandomImage === randomImageArray[2]){
 
     firstRandomImage = pickRandom(0, Product.collection.length);
     secondRandomImage = pickRandom(0, Product.collection.length);
     thirdRandomImage = pickRandom(0, Product.collection.length);
-
+    console.log('ahhhhhhhhhhhhhhhh');
   }
 
-  while(secondRandomImage === firstRandomImage ||
-        secondRandomImage === ){
+  while(secondRandomImage === firstRandomImage){
     secondRandomImage = pickRandom(0, Product.collection.length);
   }
   while(thirdRandomImage === firstRandomImage || thirdRandomImage === secondRandomImage){
