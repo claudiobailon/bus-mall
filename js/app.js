@@ -1,10 +1,9 @@
 'use strict';
 
 //=============================Global Variables & Functions===================================
-// var productCollection = [];
 Product.collection = [];
 var totalClicks = 0;
-var maxClicks = 25 ;
+var maxClicks = 5 ;
 var randomImageArray = [];
 var lastImageArray = [];
 
@@ -91,8 +90,9 @@ function handleClickOnProduct(event){
 // }
 //===============================ReRender Images after the click=====================
 function reRenderRandomImages(){
+  document.getElementById('refresh').style.display='none';
+  document.getElementById('clear-data').style.display='none';
   randomImageArray = [];
-  // chooseRandomImages();
 
   var firstRandomImage = pickRandom(0, Product.collection.length);
   var secondRandomImage = pickRandom(0, Product.collection.length);
@@ -165,6 +165,8 @@ function reRenderRandomImages(){
     document.getElementById('center').style.display='none';
     document.getElementById('right').style.display='none';
     document.getElementById('intro').style.display='none';
+    document.getElementById('refresh').style.display='block';
+    document.getElementById('clear-data').style.display='block';
     //Change the none's to true in button click to make images reappear
 
     var resultsList = document.getElementById('list-location');
