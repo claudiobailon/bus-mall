@@ -194,27 +194,52 @@ function renderProductChart() {
       datasets: [{
         label: 'Product Clicks',
         data: imgClicks,
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
+        fontColor:'rgba(255, 190, 220, 0.6)',
+        backgroundColor:'rgba(255, 190, 220, 0.6)',
+        borderColor:'rgba(255, 190, 220, 1)',
+        borderWidth: 1,
+        hoverBackgroundColor:'rgba(255, 190, 220, 1)',
 
-        ],
-        borderWidth: 1
       },
       {
         label: 'Product Shown',
         data: imgShown,
-        backgroundColor: [
-
-          'rgba(54, 162, 235, 0.2)',
-
-        ],
-        borderColor: [
-          'rgba(54, 162, 235, 1)',
-        ],
+        backgroundColor:'rgba(180, 200, 235, 0.6)',
+        borderColor: 'rgba(180, 200, 235, 1)',
+        hoverBackgroundColor:'rgba(180, 200, 235, 1)',
         borderWidth: 1
+      }
+      ]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+  ctx = document.getElementById('productRadarChart').getContext('2d');
+  var productRadarChart = new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: productLabels,
+      datasets: [{
+        label: 'Product Clicks',
+        data: imgClicks,
+        backgroundColor:'rgba(255, 190, 220, 0.6)',
+        borderColor:'rgba(255, 190, 220, 1)',
+        borderWidth: 1,
+
+      },
+      {
+        label: 'Product Shown',
+        data: imgShown,
+        backgroundColor:'rgba(180, 200, 235, 0.6)',
+        borderColor: 'rgba(180, 200, 235, 1)',
+          borderWidth: 1
       }
       ]
     },

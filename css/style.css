@@ -91,3 +91,13 @@ li {
 #right {
   max-width: 33%;
 }
+#productChart {
+  color:aliceblue;
+  width: 66%;
+  height:50vw;
+}
+#productRadarChart {
+  color:aliceblue;
+  width: 66%;
+  height:50vw;
+}
