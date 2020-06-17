@@ -91,6 +91,7 @@ li {
 #right {
   max-width: 33%;
 }
+/* Tried to style charts, didn't work */
 #productChart {
   color:aliceblue;
   width: 66%;
