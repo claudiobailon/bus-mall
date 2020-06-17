@@ -73,35 +73,30 @@ function handleClickOnProduct(event){
 }
 //=========================Choose Random Images function==============================
 var randomImageArray = [];
-var lastImageArray = [];
+var lastImageArray = [0,1,2];
 
 
 function chooseRandomImages(){
 
-  var firstRandomImage = randomImageArray[0];
-  var secondRandomImage = randomImageArray[0];
-  var thirdRandomImage = randomImageArray[0];
+  var firstRandomImage = pickRandom(0, Product.collection.length);
+  var secondRandomImage = pickRandom(0, Product.collection.length);
+  var thirdRandomImage = pickRandom(0, Product.collection.length);
 
   //this is statment checks if any of the images are repeating
-
-  //while looped moved to 257. Delete them if for loop doesn't work
- 
-
-
-  if( firstRandomImage === randomImageArray[0] ||
-      secondRandomImage === randomImageArray[0] ||
-      thirdRandomImage === randomImageArray[0] ||
-      firstRandomImage === randomImageArray[1] ||
-      secondRandomImage === randomImageArray[1] ||
-      thirdRandomImage === randomImageArray[1] ||
-      firstRandomImage === randomImageArray[2] ||
-      secondRandomImage === randomImageArray[2] ||
-      thirdRandomImage === randomImageArray[2]){
-
+  while( firstRandomImage === lastImageArray[0] ||
+      secondRandomImage === lastImageArray[0] ||
+      thirdRandomImage === lastImageArray[0] ||
+      firstRandomImage === lastImageArray[1] ||
+      secondRandomImage === lastImageArray[1] ||
+      thirdRandomImage === lastImageArray[1] ||
+      firstRandomImage === lastImageArray[2] ||
+      secondRandomImage === lastImageArray[2] ||
+      thirdRandomImage === lastImageArray[2]){
+    // console.log(firstRandomImage, secondRandomImage, thirdRandomImage, lastImageArray[0], lastImageArray[1], lastImageArray[2]);
     firstRandomImage = pickRandom(0, Product.collection.length);
     secondRandomImage = pickRandom(0, Product.collection.length);
     thirdRandomImage = pickRandom(0, Product.collection.length);
-    console.log('whooooooops');
+    // console.log('whooooooops');
   }
 
   while(secondRandomImage === firstRandomImage){
@@ -111,12 +106,13 @@ function chooseRandomImages(){
     thirdRandomImage = pickRandom(0, Product.collection.length);
   }
   randomImageArray.push(firstRandomImage,secondRandomImage,thirdRandomImage);//populates randomImageArray
-  console.log('these shouldn\'t repeat', firstRandomImage, secondRandomImage,thirdRandomImage);
+  // console.log('these shouldn\'t repeat', firstRandomImage, secondRandomImage,thirdRandomImage);
 }
 //===============================ReRender Images after the click=====================
 function reRenderRandomImages(){
   randomImageArray = [];
   chooseRandomImages();
+  lastImageArray =[];//this is to help not repeat img 2x in a row
 
   var leftImage = document.getElementById('left-image');
   var leftText = document.getElementById('left-caption');
@@ -204,9 +200,8 @@ function renderProductChart() {
         data: imgClicks,
         backgroundColor:'rgba(255, 190, 220, 0.6)',
         borderColor:'rgba(255, 190, 220, 1)',
-        borderWidth: 1,
         hoverBackgroundColor:'rgba(255, 190, 220, 1)',
-
+        borderWidth: 1,
       },
       {
         label: 'Product Shown',
@@ -261,19 +256,3 @@ function renderProductChart() {
     }
   });
 }
-
-// while ( firstRandomImage === randomImageArray[0] ||
-//   secondRandomImage === randomImageArray[0] ||
-//   thirdRandomImage === randomImageArray[0] ||
-//   firstRandomImage === randomImageArray[1] ||
-//   secondRandomImage === randomImageArray[1] ||
-//   thirdRandomImage === randomImageArray[1] ||
-//   firstRandomImage === randomImageArray[2] ||
-//   secondRandomImage === randomImageArray[2] ||
-//   thirdRandomImage === randomImageArray[2]){
-
-//   firstRandomImage = pickRandom(0, Product.collection.length);
-//   secondRandomImage = pickRandom(0, Product.collection.length);
-//   thirdRandomImage = pickRandom(0, Product.collection.length);
-//   console.log('ahhhhhhhhhhhhhhhh',firstRandomImage, secondRandomImage,thirdRandomImage);
-// }
