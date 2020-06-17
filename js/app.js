@@ -4,7 +4,7 @@
 // var productCollection = [];
 Product.collection = [];
 var totalClicks = 0;
-var maxClicks = 25 ;
+var maxClicks = 5 ;
 
 function pickRandom(min, max){
   return Math.floor(Math.random() * (max - min) + min);
@@ -42,6 +42,8 @@ new Product('img/usb.gif', 'Tentacle Flash Drive');
 new Product('img/water-can.jpg', 'Unique Watering-Can');
 new Product('img/wine-glass.jpg', 'Special Wine Glass');
 
+
+
 //======================These are to make sure proper amount of times shown for starting 3 images is correct=====
 Product.collection[0].shown= 1;
 Product.collection[1].shown= 1;
@@ -70,6 +72,10 @@ function handleClickOnProduct(event){
     }
     reRenderRandomImages();
   }
+  //below puts all products in Product.collection into string form
+  var productCollectionString = JSON.stringify(Product.collection);
+  localStorage.setItem('savedProducts', productCollectionString);
+
 }
 //=========================Choose Random Images function==============================
 var randomImageArray = [];
@@ -233,6 +239,7 @@ function renderProductChart() {
         data: imgClicks,
         backgroundColor:'rgba(255, 190, 220, 0.6)',
         borderColor:'rgba(255, 190, 220, 1)',
+        lineTension: .1,
         borderWidth: 1,
 
       },
@@ -241,6 +248,7 @@ function renderProductChart() {
         data: imgShown,
         backgroundColor:'rgba(180, 200, 235, 0.6)',
         borderColor: 'rgba(180, 200, 235, 1)',
+        lineTension: .1,
         borderWidth: 1
       }
       ]
