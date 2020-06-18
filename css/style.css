@@ -43,14 +43,6 @@ div > p {
   text-align: center;
   margin-top: 10px;
 }
-/* h3 {
-  font-size: 30px;
-  color: rgb(2, 26, 48);
-  text-align: center;
-  margin-bottom: 30px;
-  margin-top: 700px;
-  background-color: rgb(4, 0, 255);
-} */
 #list-location {
   box-sizing: border-box;
   width: 75%;
@@ -91,14 +83,30 @@ li {
 #right {
   max-width: 33%;
 }
+#buttons {
+  width: 100%
+  text-align: center;
+  float: right;
+  margin-right: 45%;
+}
+#refresh, #clear-data {
+  float: left;
+  font-size: 14px;
+  margin-right: 5px;
+}
 /* Tried to style charts, didn't work */
-#productChart {
+canvas {
+  max-width:70%;
+  margin-left:10%;
+  text-align: center;
+}
+/* #productChart {
   color:aliceblue;
-  width: 66%;
+  width: 50%;
   height:50vw;
 }
 #productRadarChart {
   color:aliceblue;
-  width: 66%;
+  width: 50%;
   height:50vw;
-}
+} */

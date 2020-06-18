@@ -1,10 +1,11 @@
 'use strict';
 
 //=============================Global Variables & Functions===================================
-// var productCollection = [];
 Product.collection = [];
 var totalClicks = 0;
 var maxClicks = 25 ;
+var randomImageArray = [];
+var lastImageArray = [];
 
 function pickRandom(min, max){
   return Math.floor(Math.random() * (max - min) + min);
@@ -42,14 +43,28 @@ new Product('img/usb.gif', 'Tentacle Flash Drive');
 new Product('img/water-can.jpg', 'Unique Watering-Can');
 new Product('img/wine-glass.jpg', 'Special Wine Glass');
 
-//======================These are to make sure proper amount of times shown for starting 3 images is correct=====
-Product.collection[0].shown= 1;
-Product.collection[1].shown= 1;
-Product.collection[2].shown= 1;
+
+//==========================================Retrieve saved data from Local Storage===================
+
+//below gets products from local storage in string form and assigning it to a new variable
+var savedProductsString = localStorage.getItem('savedProducts');
+var fetchedProducts = JSON.parse(savedProductsString);//turns stringed variable into object
+
+if(fetchedProducts){
+  Product.collection = fetchedProducts;
+}
+reRenderRandomImages();
+
 //==============================Create Event Listener=============================
 
 var catalogImageSection = document.getElementById('catalog-images');
 catalogImageSection.addEventListener('click', handleClickOnProduct);
+
+var refreshButton = document.getElementById('refresh');
+refreshButton.addEventListener('click', handleRefreshClick);
+
+var clearButton = document.getElementById('clear-data');
+clearButton.addEventListener('click', handleClearClick);
 
 //===============================Callback Funtion==================================
 function handleClickOnProduct(event){
@@ -71,48 +86,60 @@ function handleClickOnProduct(event){
     reRenderRandomImages();
   }
 }
-//=========================Choose Random Images function==============================
-var randomImageArray = [];
-var lastImageArray = [0,1,2];
+function handleRefreshClick(){
+  location.reload();//https://www.w3schools.com/jsref/met_loc_reload.asp
+}
+function handleClearClick(){
+  localStorage.clear();
+  document.getElementById('product-chart').style.display='none';
+  document.getElementById('product-radar-chart').style.display='none';
+  document.getElementById('list-location').style.display='none';
+}
 
-
-function chooseRandomImages(){
+// ===========================ReRender Images after the click=====================
+function reRenderRandomImages(){
+  document.getElementById('refresh').style.display='none';
+  document.getElementById('clear-data').style.display='none';
+  randomImageArray = [];
 
   var firstRandomImage = pickRandom(0, Product.collection.length);
   var secondRandomImage = pickRandom(0, Product.collection.length);
   var thirdRandomImage = pickRandom(0, Product.collection.length);
 
-  //this is statment checks if any of the images are repeating
   while( firstRandomImage === lastImageArray[0] ||
-      secondRandomImage === lastImageArray[0] ||
-      thirdRandomImage === lastImageArray[0] ||
-      firstRandomImage === lastImageArray[1] ||
-      secondRandomImage === lastImageArray[1] ||
-      thirdRandomImage === lastImageArray[1] ||
-      firstRandomImage === lastImageArray[2] ||
-      secondRandomImage === lastImageArray[2] ||
-      thirdRandomImage === lastImageArray[2]){
-    // console.log(firstRandomImage, secondRandomImage, thirdRandomImage, lastImageArray[0], lastImageArray[1], lastImageArray[2]);
+    secondRandomImage === lastImageArray[0] ||
+    thirdRandomImage === lastImageArray[0] ||
+    firstRandomImage === lastImageArray[1] ||
+    secondRandomImage === lastImageArray[1] ||
+    thirdRandomImage === lastImageArray[1] ||
+    firstRandomImage === lastImageArray[2] ||
+    secondRandomImage === lastImageArray[2] ||
+    thirdRandomImage === lastImageArray[2]){
+  // console.log(firstRandomImage, secondRandomImage, thirdRandomImage, lastImageArray[0], lastImageArray[1], lastImageArray[2]);
     firstRandomImage = pickRandom(0, Product.collection.length);
     secondRandomImage = pickRandom(0, Product.collection.length);
     thirdRandomImage = pickRandom(0, Product.collection.length);
     // console.log('whooooooops');
+    while(secondRandomImage === firstRandomImage){
+      secondRandomImage = pickRandom(0, Product.collection.length);
+    }
+    while(thirdRandomImage === firstRandomImage || thirdRandomImage === secondRandomImage){
+      thirdRandomImage = pickRandom(0, Product.collection.length);
+    }
   }
-
   while(secondRandomImage === firstRandomImage){
     secondRandomImage = pickRandom(0, Product.collection.length);
   }
   while(thirdRandomImage === firstRandomImage || thirdRandomImage === secondRandomImage){
     thirdRandomImage = pickRandom(0, Product.collection.length);
   }
+
+
+  lastImageArray =[firstRandomImage,secondRandomImage,thirdRandomImage];//this is to help not repeat img 2x in a row
   randomImageArray.push(firstRandomImage,secondRandomImage,thirdRandomImage);//populates randomImageArray
-  // console.log('these shouldn\'t repeat', firstRandomImage, secondRandomImage,thirdRandomImage);
-}
-//===============================ReRender Images after the click=====================
-function reRenderRandomImages(){
-  randomImageArray = [];
-  chooseRandomImages();
-  lastImageArray =[];//this is to help not repeat img 2x in a row
+  lastImageArray.push(firstRandomImage,secondRandomImage,thirdRandomImage);
+
+  console.log('these shouldn\'t repeat', firstRandomImage, secondRandomImage,thirdRandomImage);
 
   var leftImage = document.getElementById('left-image');
   var leftText = document.getElementById('left-caption');
@@ -139,8 +166,6 @@ function reRenderRandomImages(){
   rightText.textContent = thirdProduct.imageCaption;
   thirdProduct.shown++;
 
-  lastImageArray.push(randomNumber1,randomNumber2,randomNumber3);
-
   //Should be ablt to put lines 89-102 in a loop
   if(totalClicks === maxClicks){
     //the below section hides the images to display the list. Learned from https://stackoverflow.com/questions/6802683/js-how-to-remove-image-with-javascript
@@ -148,6 +173,9 @@ function reRenderRandomImages(){
     document.getElementById('center').style.display='none';
     document.getElementById('right').style.display='none';
     document.getElementById('intro').style.display='none';
+    document.getElementById('refresh').style.display='block';
+    document.getElementById('clear-data').style.display='block';
+    //https://www.washington.edu/accesscomputing/webd2/student/unit5/module2/lesson5.html showed me to use display block
 
     var resultsList = document.getElementById('list-location');
     var listHeader = document.createElement('h3');
@@ -169,28 +197,28 @@ function reRenderRandomImages(){
         resultsList.appendChild(listContent);
       }
     }
+    //below puts all products in Product.collection into string form
+    var productCollectionString = JSON.stringify(Product.collection);
+    localStorage.setItem('savedProducts', productCollectionString);//saves string version of Product.collection
   }
 }
+
 
 //======================================Render Results Chart======================================================
 function renderProductChart() {
 
   var productLabels = [];
-  for(var i = 0; i < Product.collection.length; i++){
-    productLabels.push(Product.collection[i].imageCaption);
-  }
-
   var imgClicks = [];
-  for(i = 0; i < Product.collection.length; i++){
+  var imgShown = [];
+
+  for(var i = 0; i < Product.collection.length; i++){
+    imgShown.push(Product.collection[i].shown);
+    productLabels.push(Product.collection[i].imageCaption);
     imgClicks.push(Product.collection[i].clicked);
   }
-  var imgShown = [];
-  for(i = 0; i < Product.collection.length; i++){
-    imgShown.push(Product.collection[i].shown);
-  }
 
 
-  var ctx = document.getElementById('productChart').getContext('2d');
+  var ctx = document.getElementById('product-chart').getContext('2d');
   var productChart = new Chart(ctx, {
     type: 'horizontalBar',
     data: {
@@ -223,7 +251,7 @@ function renderProductChart() {
       }
     }
   });
-  ctx = document.getElementById('productRadarChart').getContext('2d');
+  ctx = document.getElementById('product-radar-chart').getContext('2d');
   var productRadarChart = new Chart(ctx, {
     type: 'radar',
     data: {
@@ -233,6 +261,7 @@ function renderProductChart() {
         data: imgClicks,
         backgroundColor:'rgba(255, 190, 220, 0.6)',
         borderColor:'rgba(255, 190, 220, 1)',
+        lineTension: .1,
         borderWidth: 1,
 
       },
@@ -241,6 +270,7 @@ function renderProductChart() {
         data: imgShown,
         backgroundColor:'rgba(180, 200, 235, 0.6)',
         borderColor: 'rgba(180, 200, 235, 1)',
+        lineTension: .1,
         borderWidth: 1
       }
       ]
