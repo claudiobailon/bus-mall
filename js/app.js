@@ -3,7 +3,7 @@
 //=============================Global Variables & Functions===================================
 Product.collection = [];
 var totalClicks = 0;
-var maxClicks = 5 ;
+var maxClicks = 25 ;
 var randomImageArray = [];
 var lastImageArray = [];
 
@@ -60,6 +60,12 @@ reRenderRandomImages();
 var catalogImageSection = document.getElementById('catalog-images');
 catalogImageSection.addEventListener('click', handleClickOnProduct);
 
+var refreshButton = document.getElementById('refresh');
+refreshButton.addEventListener('click', handleRefreshClick);
+
+var clearButton = document.getElementById('clear-data');
+clearButton.addEventListener('click', handleClearClick);
+
 //===============================Callback Funtion==================================
 function handleClickOnProduct(event){
   if(event.target.tagName === 'IMG'){
@@ -80,15 +86,17 @@ function handleClickOnProduct(event){
     reRenderRandomImages();
   }
 }
-//=========================Choose Random Images function==============================
+function handleRefreshClick(){
+  location.reload();//https://www.w3schools.com/jsref/met_loc_reload.asp
+}
+function handleClearClick(){
+  localStorage.clear();
+  document.getElementById('product-chart').style.display='none';
+  document.getElementById('product-radar-chart').style.display='none';
+  document.getElementById('list-location').style.display='none';
+}
 
-
-// function chooseRandomImages(){
-
-//this is statment checks if any of the images are repeating
-
-// }
-//===============================ReRender Images after the click=====================
+// ===========================ReRender Images after the click=====================
 function reRenderRandomImages(){
   document.getElementById('refresh').style.display='none';
   document.getElementById('clear-data').style.display='none';
@@ -167,7 +175,7 @@ function reRenderRandomImages(){
     document.getElementById('intro').style.display='none';
     document.getElementById('refresh').style.display='block';
     document.getElementById('clear-data').style.display='block';
-    //Change the none's to true in button click to make images reappear
+    //https://www.washington.edu/accesscomputing/webd2/student/unit5/module2/lesson5.html showed me to use display block
 
     var resultsList = document.getElementById('list-location');
     var listHeader = document.createElement('h3');
@@ -210,7 +218,7 @@ function renderProductChart() {
   }
 
 
-  var ctx = document.getElementById('productChart').getContext('2d');
+  var ctx = document.getElementById('product-chart').getContext('2d');
   var productChart = new Chart(ctx, {
     type: 'horizontalBar',
     data: {
@@ -243,7 +251,7 @@ function renderProductChart() {
       }
     }
   });
-  ctx = document.getElementById('productRadarChart').getContext('2d');
+  ctx = document.getElementById('product-radar-chart').getContext('2d');
   var productRadarChart = new Chart(ctx, {
     type: 'radar',
     data: {
