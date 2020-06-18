@@ -87,7 +87,7 @@ li {
   width: 100%
   text-align: center;
   float: right;
-  margin-right: 40%;
+  margin-right: 45%;
 }
 #refresh, #clear-data {
   float: left;
@@ -95,13 +95,18 @@ li {
   margin-right: 5px;
 }
 /* Tried to style charts, didn't work */
-#productChart {
+canvas {
+  max-width:70%;
+  margin-left:10%;
+  text-align: center;
+}
+/* #productChart {
   color:aliceblue;
-  width: 66%;
+  width: 50%;
   height:50vw;
 }
 #productRadarChart {
   color:aliceblue;
-  width: 66%;
+  width: 50%;
   height:50vw;
-}
+} */
