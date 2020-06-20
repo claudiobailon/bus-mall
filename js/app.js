@@ -106,6 +106,8 @@ function reRenderRandomImages(){
   var secondRandomImage = pickRandom(0, Product.collection.length);
   var thirdRandomImage = pickRandom(0, Product.collection.length);
 
+  
+
   while( firstRandomImage === lastImageArray[0] ||
     secondRandomImage === lastImageArray[0] ||
     thirdRandomImage === lastImageArray[0] ||
@@ -139,7 +141,7 @@ function reRenderRandomImages(){
   randomImageArray.push(firstRandomImage,secondRandomImage,thirdRandomImage);//populates randomImageArray
   lastImageArray.push(firstRandomImage,secondRandomImage,thirdRandomImage);
 
-  console.log('these shouldn\'t repeat', firstRandomImage, secondRandomImage,thirdRandomImage);
+  // console.log('these shouldn\'t repeat', firstRandomImage, secondRandomImage,thirdRandomImage);
 
   var leftImage = document.getElementById('left-image');
   var leftText = document.getElementById('left-caption');
